@@ -7,7 +7,7 @@
     VPC_NAME: "${VPC_NAME}"
     VPC_INFO_OUT: "${VPC_INFO_OUT}"
   tasks:
-    - name: Create VPC
+    - name: Destroy VPC {{ VPC_NAME }}
       ec2_vpc_net:
         state: absent
         name: "{{ VPC_NAME }}"

@@ -61,6 +61,23 @@ resources:
       params:
         SEED: "initial_version"
 
+# AMI VPC Creation Config
+  - name: ami_vpc_subnet_conf
+    type: params
+    version:
+      params:
+        AWS_REGION: "us-east-1"
+        VPC_SUBNET_NAME: "ami_vpc_subnet_pub"
+        VPC_SUBNET_CIDR_BLOCK: "200.0.0.0/24"
+        VPC_SUBNET_INFO_OUT: "ami_vpc_subnet_info"
+
+# OUT AWS AMI VPC IDs
+  - name: ami_vpc_subnet_info
+    type: params
+    version:
+      params:
+        SEED: "initial_version"
+
 
 ## OUT AWS AMI VPC IDs
 #  - name: ami_vpc_conf

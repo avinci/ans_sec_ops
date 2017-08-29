@@ -7,7 +7,7 @@
     VPC_NAME: "${VPC_NAME}"
     VPC_INFO_OUT: "${VPC_INFO_OUT}"
   tasks:
-    - name: Create VPC
+    - name: Create VPC {{ VPC_NAME }}
       ec2_vpc_net:
         name: "{{ VPC_NAME }}"
         cidr_block: "{{ VPC_CIDR_BLOCK }}"

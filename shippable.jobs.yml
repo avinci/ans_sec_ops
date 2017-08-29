@@ -24,7 +24,7 @@ jobs:
     always:
       - script: . /build/IN/ans_sec_ops/gitRepo/tf_archiveState.sh inst_tf_state
 
-# SETUP Instance Profile with TERRAFORM
+# PROV AMI VPC with Ansible
   - name: prov_ami_vpc
     type: runSh
     steps:
@@ -42,6 +42,7 @@ jobs:
             ansible-playbook -v an_vpc_prov.yml
       - OUT: ami_vpc_info
 
+# DEPROV AMI VPC with Ansible
   - name: deprov_ami_vpc
     type: runSh
     steps:
@@ -59,6 +60,44 @@ jobs:
             ansible-playbook -v an_vpc_deprov.yml
       - OUT: ami_vpc_info
 
+
+# PROV AMI VPC Subnet with Ansible
+  - name: prov_ami_vpc
+    type: runSh
+    steps:
+      - IN: ami_vpc_info
+      - IN: ami_vpc_subnet_conf
+      - IN: aws_creds
+        switch: off
+      - IN: ans_sec_ops
+        switch: off
+      - TASK:
+        - script: |
+            export AWS_ACCESS_KEY_ID=$(shipctl get_integration_resource_field aws_creds aws_access_key_id)
+            export AWS_SECRET_ACCESS_KEY=$(shipctl get_integration_resource_field aws_creds aws_secret_access_key)
+            cd $(shipctl get_resource_state ans_sec_ops)
+            shipctl replace an_vpc_subnet_prov.yml
+            ansible-playbook -v an_vpc_subnet_prov.yml
+      - OUT: ami_vpc_subnet_info
+
+# DEPROV AMI VPC Subnet with Ansible
+  - name: deprov_ami_vpc
+    type: runSh
+    steps:
+      - IN: ami_vpc_info
+      - IN: ami_vpc_subnet_conf
+      - IN: aws_creds
+        switch: off
+      - IN: ans_sec_ops
+        switch: off
+      - TASK:
+        - script: |
+            export AWS_ACCESS_KEY_ID=$(shipctl get_integration_resource_field aws_creds aws_access_key_id)
+            export AWS_SECRET_ACCESS_KEY=$(shipctl get_integration_resource_field aws_creds aws_secret_access_key)
+            cd $(shipctl get_resource_state ans_sec_ops)
+            shipctl replace an_vpc_subnet_deprov.yml
+            ansible-playbook -v an_vpc_subnet_deprov.yml
+      - OUT: ami_vpc_subnet_info
 
 ## CREATE AWS AMI used to deploy ECS VMs with PACKER
 #  - name: build_ecs_ami
