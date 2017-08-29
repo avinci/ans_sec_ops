@@ -57,7 +57,9 @@ resources:
 # OUT AWS AMI VPC IDs
   - name: ami_vpc_info
     type: params
-
+    version:
+      params:
+        SEED: "initial_version"
 
 
 ## OUT AWS AMI VPC IDs
