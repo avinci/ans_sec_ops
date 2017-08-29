@@ -32,6 +32,7 @@ jobs:
         switch: off
       - IN: ans_sec_ops
         switch: off
+      - IN: ami_vpc_conf
       - TASK:
         - script: |
             export AWS_ACCESS_KEY_ID=$(shipctl get_integration_resource_field aws_creds aws_access_key_id)
