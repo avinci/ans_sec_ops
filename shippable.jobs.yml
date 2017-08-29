@@ -9,13 +9,12 @@ jobs:
     type: runSh
     steps:
       - IN: inst_tf_state
-      - IN: net_conf
       - IN: aws_creds
         switch: off
       - IN: ans_sec_ops
         switch: off
       - TASK:
-        - script: . /build/IN/ans_sec_ops/gitRepo/createInstProfWithTF.sh create
+        - script: . /build/IN/ans_sec_ops/gitRepo/tf_createInstProf.sh create
       - OUT: inst_prof_name
       - OUT: inst_tf_state
     on_success:
@@ -23,7 +22,25 @@ jobs:
     on_failure:
       - script: echo "FAILURE"
     always:
-      - script: . /build/IN/ans_sec_ops/gitRepo/archiveState.sh inst_tf_state
+      - script: . /build/IN/ans_sec_ops/gitRepo/tf_archiveState.sh inst_tf_state
+
+# SETUP Instance Profile with TERRAFORM
+  - name: setup_inst_prof
+    type: runSh
+    steps:
+      - IN: aws_creds
+        switch: off
+      - IN: ans_sec_ops
+        switch: off
+      - TASK:
+        - script: |
+            export AWS_ACCESS_KEY_ID=$(shipctl get_integration_resource_field aws_creds aws_access_key_id)
+            export AWS_SECRET_ACCESS_KEY=$(shipctl get_integration_resource_field aws_creds aws_secret_access_key)
+            cd $(shipctl get_resource_state ans_sec_ops)
+            shipctl replace an_vpc_prov.yml
+            ansible-playbook -v an_vpc_prov.yml
+      - OUT: ami_vpc_info
+
 
 ## CREATE AWS AMI used to deploy ECS VMs with PACKER
 #  - name: build_ecs_ami

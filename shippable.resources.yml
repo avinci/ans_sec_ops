@@ -44,6 +44,22 @@ resources:
       params:
         SEED: "initial_version"
 
+# AMI VPC Creation Config
+  - name: ami_vpc_conf
+    type: params
+    version:
+      params:
+        AWS_REGION: "us-east-1"
+        VPC_NAME: "ami_vpc"
+        VPC_CIDR_BLOCK: "200.0.0.0/16"
+        VPC_INFO_OUT: "ami_vpc_info"
+
+# OUT AWS AMI VPC IDs
+  - name: ami_vpc_info
+    type: params
+
+
+
 ## OUT AWS AMI VPC IDs
 #  - name: ami_vpc_conf
 #    type: params

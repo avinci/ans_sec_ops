@@ -28,7 +28,7 @@
     - name: Create VPC
       ec2_vpc_net:
         name: avinci_vpc
-#        state: absent
+        state: absent
         cidr_block: "{{ uberCIDRBlock }}"
         region: us-east-1
         tags:
@@ -38,21 +38,23 @@
 
     - name: Create subnet for public access
       ec2_vpc_subnet:
-        state: present
+
         vpc_id: "{{ vpc.vpc.id }}"
         cidr: "{{ publicSNCIDRBlock }}"
         resource_tags:
           Name: publicSN
+        state: absent
       register: publicSN
 
     - name: Create internet gateway
       ec2_vpc_igw:
         vpc_id: "{{ vpc.vpc.id }}"
-        state: present
+        state: absent
       register: igw
 
     - name: Set up public subnet route table
       ec2_vpc_route_table:
+        state: absent
         vpc_id: "{{ vpc.vpc.id }}"
         tags:
           Name: Public
@@ -65,6 +67,7 @@
 
     - name: public ec2 group
       ec2_group:
+        state: absent
         name: publicSG
         description: Public access Security Group
         vpc_id: "{{ vpc.vpc.id }}"
@@ -87,15 +90,15 @@
             cidr_ip: "{{ publicSNCIDRBlock }}"
       register: publicSG
 
-    - name: Create IAM role with policy
-      iam_role:
-        name: demoECSRole
-        assume_role_policy_document: "{{ lookup('file','iam_role.json') }}"
-        state: present
-      register: demoECSRole
-
-    - debug:
-        var: demoECSRole
+#    - name: Create IAM role with policy
+#      iam_role:
+#        name: demoECSRole
+#        assume_role_policy_document: "{{ lookup('file','iam_role.json') }}"
+#        state: present
+#      register: demoECSRole
+#
+#    - debug:
+#        var: demoECSRole
 
 #    - name: Assign a policy called Admin to the demoECSRole role
 #      iam_policy:
