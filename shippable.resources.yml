@@ -13,6 +13,13 @@ resources:
     type: integration
     integration: "demo_aws_key"
 
+# AWS REGION Param
+  - name: aws_region
+    type: params
+    version:
+      params:
+        AWS_REGION: "us-east-1"
+
 # Security Ops scripts repo
   - name: ans_sec_ops
     type: gitRepo
@@ -30,10 +37,6 @@ resources:
     type: params
     version:
       params:
-        REGION: "us-east-1"
-        AMI_VPC: "ami_vpc"
-        AMI_NETWORK_CIDR: "200.0.0.0/16"
-        AMI_PUBLIC_CIDR: "200.0.0.0/24"
         TEST_VPC: "test_vpc"
         TEST_NETWORK_CIDR: "210.0.0.0/16"
         TEST_PUBLIC_CIDR: "210.0.0.0/24"
@@ -48,25 +51,28 @@ resources:
       params:
         SEED: "initial_version"
 
+# AMI State Resource Name
+  - name: ami_state_res_name
+    type: params
+    version:
+      params:
+        AMI_STATE_RES_NAME: "infra_state"
+
 # AMI VPC Creation Config
   - name: ami_vpc_conf
     type: params
     version:
       params:
-        AWS_REGION: "us-east-1"
         VPC_NAME: "ami_vpc"
         VPC_CIDR_BLOCK: "200.0.0.0/16"
-        VPC_INFO_OUT: "infra_state"
 
 # AMI VPC Creation Config
   - name: ami_vpc_subnet_conf
     type: params
     version:
       params:
-        AWS_REGION: "us-east-1"
         VPC_SUBNET_NAME: "ami_vpc_subnet_pub"
         VPC_SUBNET_CIDR_BLOCK: "200.0.0.0/24"
-        VPC_SUBNET_INFO_OUT: "infra_state"
 
 # OUT AWS AMI VPC IDs
   - name: ami_vpc_subnet_info

@@ -3,7 +3,7 @@
   gather_facts: False
 
   vars:
-    VPC_SUBNET_INFO_OUT: "${VPC_SUBNET_INFO_OUT}"
+    AMI_STATE_RES_NAME: "${AMI_STATE_RES_NAME}"
     VPC_ID: "${VPC_ID}"
   tasks:
     - name: Create internet gateway
@@ -13,4 +13,4 @@
 
     - name: run cmd
       shell: |
-        shipctl post_resource_state "{{ VPC_SUBNET_INFO_OUT }}" VPC_IGW_ID DELETED
+        shipctl post_resource_state "{{ AMI_STATE_RES_NAME }}" VPC_IGW_ID DELETED

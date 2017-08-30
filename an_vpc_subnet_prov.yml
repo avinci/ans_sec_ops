@@ -5,7 +5,7 @@
   vars:
     VPC_SUBNET_CIDR_BLOCK: "${VPC_SUBNET_CIDR_BLOCK}"
     VPC_SUBNET_NAME: "${VPC_SUBNET_NAME}"
-    VPC_SUBNET_INFO_OUT: "${VPC_SUBNET_INFO_OUT}"
+    AMI_STATE_RES_NAME: "${AMI_STATE_RES_NAME}"
     VPC_ID: "${VPC_ID}"
   tasks:
     - name: Create Subnet VPC {{ VPC_NAME }}
@@ -18,8 +18,7 @@
 
     - name: run cmd
       shell: |
-        shipctl post_resource_state "{{ VPC_SUBNET_INFO_OUT }}" versionName "{{ VPC_SUBNET_NAME }}"
-        shipctl put_resource_state "{{ VPC_SUBNET_INFO_OUT }}" VPC_SUBNET_ID "{{ publicSN.subnet.id }}"
-        shipctl put_resource_state "{{ VPC_SUBNET_INFO_OUT }}" VPC_SUBNET_CIDR_BLOCK "{{ VPC_SUBNET_CIDR_BLOCK }}"
-        shipctl put_resource_state "{{ VPC_SUBNET_INFO_OUT }}" VPC_SUBNET_NAME "{{ VPC_SUBNET_NAME }}"
-        shipctl put_resource_state "{{ VPC_SUBNET_INFO_OUT }}" VPC_ID "{{ VPC_ID }}"
+        shipctl post_resource_state "{{ AMI_STATE_RES_NAME }}" versionName "{{ VPC_SUBNET_NAME }}"
+        shipctl put_resource_state "{{ AMI_STATE_RES_NAME }}" VPC_SUBNET_ID "{{ publicSN.subnet.id }}"
+        shipctl put_resource_state "{{ AMI_STATE_RES_NAME }}" VPC_SUBNET_CIDR_BLOCK "{{ VPC_SUBNET_CIDR_BLOCK }}"
+        shipctl put_resource_state "{{ AMI_STATE_RES_NAME }}" VPC_SUBNET_NAME "{{ VPC_SUBNET_NAME }}"

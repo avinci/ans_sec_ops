@@ -8,6 +8,7 @@ jobs:
   - name: setup_inst_prof
     type: runSh
     steps:
+      - IN: aws_region
       - IN: inst_tf_state
       - IN: aws_creds
         switch: off
@@ -28,6 +29,9 @@ jobs:
   - name: prov_ami_vpc
     type: runSh
     steps:
+      - IN: aws_region
+      - IN: ami_state_res_name
+        switch: off
       - IN: aws_creds
         switch: off
       - IN: ans_sec_ops
@@ -46,6 +50,9 @@ jobs:
   - name: prov_ami_vpc_subnet
     type: runSh
     steps:
+      - IN: aws_region
+      - IN: ami_state_res_name
+        switch: off
       - IN: infra_state
       - IN: prov_ami_vpc
       - IN: ami_vpc_subnet_conf
@@ -69,6 +76,9 @@ jobs:
   - name: prov_ami_vpc_igw
     type: runSh
     steps:
+      - IN: aws_region
+      - IN: ami_state_res_name
+        switch: off
       - IN: infra_state
       - IN: prov_ami_vpc
       - IN: aws_creds
@@ -91,6 +101,9 @@ jobs:
   - name: deprov_ami_vpc_subet
     type: runSh
     steps:
+      - IN: aws_region
+      - IN: ami_state_res_name
+        switch: off
       - IN: infra_state
       - IN: ami_vpc_subnet_conf
         switch: off
@@ -114,6 +127,9 @@ jobs:
   - name: deprov_ami_vpc
     type: runSh
     steps:
+      - IN: aws_region
+      - IN: ami_state_res_name
+        switch: off
       - IN: deprov_ami_vpc_subet
       - IN: aws_creds
         switch: off
