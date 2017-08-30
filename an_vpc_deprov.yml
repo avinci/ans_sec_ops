@@ -19,4 +19,4 @@
 
     - name: run cmd
       shell: |
-        shipctl post_resource_state "{{ VPC_INFO_OUT }}" versionName DELETED
+        shipctl post_resource_state "{{ VPC_INFO_OUT }}" VPC_ID DELETED

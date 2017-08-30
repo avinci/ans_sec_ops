@@ -16,4 +16,4 @@
 
     - name: run cmd
       shell: |
-        shipctl post_resource_state "{{ VPC_SUBNET_INFO_OUT }}" versionName DELETED
+        shipctl post_resource_state "{{ VPC_SUBNET_INFO_OUT }}" VPC_SUBNET_ID DELETED
