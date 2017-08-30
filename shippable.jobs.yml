@@ -63,7 +63,7 @@ jobs:
             popd
             echo VPC_ID=$VPC_ID
             shipctl replace an_vpc_subnet_prov.yml
-#            ansible-playbook -v an_vpc_subnet_prov.yml
+            ansible-playbook -v an_vpc_subnet_prov.yml
       - OUT: infra_state
 
 
