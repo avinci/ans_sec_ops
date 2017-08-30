@@ -31,12 +31,7 @@
             cidr_ip: "{{ VPC_SUBNET_CIDR_BLOCK }}"
       register: publicSG
 
-    - debug:
-        var: publicSG
-
-#    - name: run cmd
-#      shell: |
-#        shipctl post_resource_state "{{ AMI_STATE_RES_NAME }}" versionName "build-${BUILD_NUMBER}"
-#        shipctl put_resource_state "{{ AMI_STATE_RES_NAME }}" VPC_SUBNET_ID "{{ publicSN.subnet.id }}"
-#        shipctl put_resource_state "{{ AMI_STATE_RES_NAME }}" VPC_SUBNET_CIDR_BLOCK "{{ VPC_SUBNET_CIDR_BLOCK }}"
-#        shipctl put_resource_state "{{ AMI_STATE_RES_NAME }}" VPC_SUBNET_NAME "{{ VPC_SUBNET_NAME }}"
+    - name: run cmd
+      shell: |
+        shipctl post_resource_state "{{ AMI_STATE_RES_NAME }}" versionName "build-${BUILD_NUMBER}"
+        shipctl put_resource_state "{{ AMI_STATE_RES_NAME }}" VPC_SG_ID "{{ publicSG.group_id }}"
