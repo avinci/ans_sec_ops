@@ -1,0 +1,19 @@
+- hosts: localhost
+  connection: local
+  gather_facts: False
+
+  vars:
+    VPC_INFO_OUT: "${VPC_INFO_OUT}"
+    VPC_ID: "${VPC_ID}"
+  tasks:
+    - name: Create IGW
+    - name: Create internet gateway
+      ec2_vpc_igw:
+        vpc_id: "{{ VPC_ID }}"
+      register: igw
+
+    - name: run cmd
+      shell: |
+        shipctl post_resource_state "{{ VPC_INFO_OUT }}" versionName "build-${BUILD_NUMBER}"
+        shipctl put_resource_state "{{ VPC_INFO_OUT }}" VPC_IGW_ID "{{ igw.gateway_id }}"
+

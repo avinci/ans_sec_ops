@@ -1,0 +1,16 @@
+- hosts: localhost
+  connection: local
+  gather_facts: False
+
+  vars:
+    VPC_SUBNET_INFO_OUT: "${VPC_SUBNET_INFO_OUT}"
+    VPC_ID: "${VPC_ID}"
+  tasks:
+    - name: Create internet gateway
+      ec2_vpc_igw:
+        vpc_id: "{{ vpc.vpc.id }}"
+        state: absent
+
+    - name: run cmd
+      shell: |
+        shipctl post_resource_state "{{ VPC_SUBNET_INFO_OUT }}" VPC_IGW_ID DELETED
