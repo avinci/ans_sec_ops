@@ -45,7 +45,7 @@ main() {
   eval `ssh-agent -s`
   which ssh-agent
 
-  pushd "$RES_REPO_STATE/awsBuildAMI"
+  pushd "$RES_REPO_STATE"
   set_context
   build_ecs_ami
   popd
