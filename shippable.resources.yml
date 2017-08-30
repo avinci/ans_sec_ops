@@ -87,7 +87,7 @@ resources:
     type: params
     version:
       params:
-        BASE_EC2_AMI: "ami-cd0f5cb6"
+        BASE_EC2_AMI: "ami-841f46ff"
 
 
 ## Reference to ECS Test Cluster
