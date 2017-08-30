@@ -6,7 +6,6 @@
     VPC_CIDR_BLOCK: "${VPC_CIDR_BLOCK}"
     VPC_NAME: "${VPC_NAME}"
     VPC_INFO_OUT: "${VPC_INFO_OUT}"
-    VERSION_NAME: "Version created by build ${BUILD_NUMBER}"
   tasks:
     - name: Create VPC {{ VPC_NAME }}
       ec2_vpc_net:
@@ -19,7 +18,7 @@
 
     - name: run cmd
       shell: |
-        shipctl post_resource_state "{{ VPC_INFO_OUT }}" versionName "{{ VERSION_NAME }}"
+        shipctl post_resource_state "{{ VPC_INFO_OUT }}" versionName "CreatedBy build-${BUILD_NUMBER}"
         shipctl put_resource_state "{{ VPC_INFO_OUT }}" VPC_ID "{{ vpc.vpc.id }}"
         shipctl put_resource_state "{{ VPC_INFO_OUT }}" VPC_CIDR_BLOCK "{{ VPC_CIDR_BLOCK }}"
         shipctl put_resource_state "{{ VPC_INFO_OUT }}" VPC_NAME "{{ VPC_NAME }}"
