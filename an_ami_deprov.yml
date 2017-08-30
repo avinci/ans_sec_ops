@@ -1,0 +1,43 @@
+- hosts: localhost
+  connection: local
+  gather_facts: False
+
+  vars:
+    AMI_STATE_RES_NAME: "${AMI_STATE_RES_NAME}"
+    VPC_SUBNET_CIDR_BLOCK: "${VPC_SUBNET_CIDR_BLOCK}"
+    VPC_ID: "${VPC_ID}"
+    VPC_CIDR_BLOCK: "${VPC_CIDR_BLOCK}"
+    VPC_NAME: "${VPC_NAME}"
+  tasks:
+    - name: Create Subnet VPC {{ VPC_NAME }}
+      ec2_vpc_subnet:
+        vpc_id: "{{ VPC_ID }}"
+        cidr: "{{ VPC_SUBNET_CIDR_BLOCK }}"
+        state: absent
+
+    - name: run cmd
+      shell: |
+        shipctl post_resource_state "{{ AMI_STATE_RES_NAME }}" VPC_SUBNET_ID DELETED
+
+    - name: Create internet gateway
+      ec2_vpc_igw:
+        vpc_id: "{{ vpc.vpc.id }}"
+        state: absent
+
+    - name: run cmd
+      shell: |
+        shipctl post_resource_state "{{ AMI_STATE_RES_NAME }}" VPC_IGW_ID DELETED
+
+    - name: Destroy VPC {{ VPC_NAME }}
+      ec2_vpc_net:
+        state: absent
+        name: "{{ VPC_NAME }}"
+        cidr_block: "{{ VPC_CIDR_BLOCK }}"
+        tags:
+          module: "{{ VPC_NAME }}"
+        tenancy: dedicated
+      register: vpc
+
+    - name: run cmd
+      shell: |
+        shipctl post_resource_state "{{ AMI_STATE_RES_NAME }}" VPC_ID DELETED
