@@ -45,14 +45,16 @@
 #        state: absent
 #      register: publicSN
 #
-
-
 #    - name: Create internet gateway
 #      ec2_vpc_igw:
 #        vpc_id: "{{ vpc.vpc.id }}"
 #        state: absent
 #      register: igw
 #
+
+
+
+
 #    - name: Set up public subnet route table
 #      ec2_vpc_route_table:
 #        state: absent
