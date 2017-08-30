@@ -32,7 +32,7 @@ build_ecs_ami() {
   echo "-----------------------------------"
 
   cat pk_vars.json
-  
+
 #  packer build -var-file=pk_vars.json pk_baseAMI.json
 #
 #  AMI_ID=$(shipctl get_json_value manifest.json builds[0].artifact_id | cut -d':' -f 2)
