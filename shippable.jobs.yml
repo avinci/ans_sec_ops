@@ -98,7 +98,7 @@ jobs:
       - OUT: infra_state
 
 # DEPROV AMI with Ansible
-  - name: deprov_ami_vpc_subet
+  - name: deprov_ami_vpc
     type: runSh
     steps:
       - IN: aws_region
