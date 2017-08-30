@@ -28,67 +28,71 @@
     - name: Create VPC
       ec2_vpc_net:
         name: avinci_vpc
-        state: absent
         cidr_block: "{{ uberCIDRBlock }}"
         region: us-east-1
         tags:
           module: avinci_vpc
         tenancy: dedicated
+        state: absent
       register: vpc
 
     - name: Create subnet for public access
       ec2_vpc_subnet:
-
         vpc_id: "{{ vpc.vpc.id }}"
         cidr: "{{ publicSNCIDRBlock }}"
-        resource_tags:
-          Name: publicSN
+#        resource_tags:
+#          Name: publicSN
         state: absent
       register: publicSN
 
-    - name: Create internet gateway
-      ec2_vpc_igw:
-        vpc_id: "{{ vpc.vpc.id }}"
-        state: absent
-      register: igw
 
-    - name: Set up public subnet route table
-      ec2_vpc_route_table:
-        state: absent
-        vpc_id: "{{ vpc.vpc.id }}"
-        tags:
-          Name: Public
-        subnets:
-          - "{{ publicSN.subnet.id }}"
-        routes:
-          - dest: 0.0.0.0/0
-            gateway_id: "{{ igw.gateway_id }}"
-      register: publicRT
 
-    - name: public ec2 group
-      ec2_group:
-        state: absent
-        name: publicSG
-        description: Public access Security Group
-        vpc_id: "{{ vpc.vpc.id }}"
-        rules:
-          - proto: tcp
-            from_port: 80
-            to_port: 80
-            cidr_ip: 0.0.0.0/0
-          - proto: tcp
-            from_port: 22
-            to_port: 22
-            cidr_ip: 0.0.0.0/0
-          - proto: tcp
-            from_port: 8080
-            to_port: 8080
-            cidr_ip: 0.0.0.0/0
-          - proto: tcp
-            from_port: 0
-            to_port: 65535
-            cidr_ip: "{{ publicSNCIDRBlock }}"
-      register: publicSG
+
+
+
+#    - name: Create internet gateway
+#      ec2_vpc_igw:
+#        vpc_id: "{{ vpc.vpc.id }}"
+#        state: absent
+#      register: igw
+#
+#    - name: Set up public subnet route table
+#      ec2_vpc_route_table:
+#        state: absent
+#        vpc_id: "{{ vpc.vpc.id }}"
+#        tags:
+#          Name: Public
+#        subnets:
+#          - "{{ publicSN.subnet.id }}"
+#        routes:
+#          - dest: 0.0.0.0/0
+#            gateway_id: "{{ igw.gateway_id }}"
+#      register: publicRT
+#
+#    - name: public ec2 group
+#      ec2_group:
+#        state: absent
+#        name: publicSG
+#        description: Public access Security Group
+#        vpc_id: "{{ vpc.vpc.id }}"
+#        rules:
+#          - proto: tcp
+#            from_port: 80
+#            to_port: 80
+#            cidr_ip: 0.0.0.0/0
+#          - proto: tcp
+#            from_port: 22
+#            to_port: 22
+#            cidr_ip: 0.0.0.0/0
+#          - proto: tcp
+#            from_port: 8080
+#            to_port: 8080
+#            cidr_ip: 0.0.0.0/0
+#          - proto: tcp
+#            from_port: 0
+#            to_port: 65535
+#            cidr_ip: "{{ publicSNCIDRBlock }}"
+#      register: publicSG
 
 #    - name: Create IAM role with policy
 #      iam_role:

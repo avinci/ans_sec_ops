@@ -10,7 +10,7 @@ export RES_AWS_CREDS="aws_creds"
 export STATE_RES="inst_tf_state"
 export TF_STATEFILE="terraform.tfstate"
 
-export OUT_INST_PROF="inst_prof_name"
+export OUT_INST_PROF="infra_state"
 
 # get the path where gitRepo code is available
 export RES_REPO_STATE=$(shipctl get_resource_state $RES_REPO)
@@ -42,7 +42,7 @@ apply_changes() {
 
   #output AMI VPC
   shipctl post_resource_state $OUT_INST_PROF versionName \
-    $(terraform output instance_profile_name)
+    "Version created by build $BUILD_NUMBER"
   shipctl put_resource_state $OUT_INST_PROF INST_PROF_NAME \
     $(terraform output instance_profile_name)
 }

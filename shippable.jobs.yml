@@ -15,8 +15,8 @@ jobs:
         switch: off
       - TASK:
         - script: . /build/IN/ans_sec_ops/gitRepo/tf_createInstProf.sh create
-      - OUT: inst_prof_name
       - OUT: inst_tf_state
+      - OUT: infra_state
     on_success:
       - script: echo "SUCCESS"
     on_failure:
@@ -40,8 +40,7 @@ jobs:
             cd $(shipctl get_resource_state ans_sec_ops)
             shipctl replace an_vpc_prov.yml
             ansible-playbook -v an_vpc_prov.yml
-      - OUT: ami_vpc_info
-
+      - OUT: infra_state
 
 # PROV AMI VPC Subnet with Ansible
   - name: prov_ami_vpc_subnet
