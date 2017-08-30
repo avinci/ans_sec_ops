@@ -31,13 +31,15 @@ build_ecs_ami() {
   echo "building AMI"
   echo "-----------------------------------"
 
-  packer build -var-file=pk_vars.json pk_baseAMI.json
-
-  AMI_ID=$(shipctl get_json_value manifest.json builds[0].artifact_id | cut -d':' -f 2)
-
-  # create version for ami param
-  shipctl post_resource_state $CURR_JOB versionName $AMI_ID
-  shipctl post_resource_state $OUT_AMI_SEC_APPRD versionName $AMI_ID
+  cat pk_vars.json
+  
+#  packer build -var-file=pk_vars.json pk_baseAMI.json
+#
+#  AMI_ID=$(shipctl get_json_value manifest.json builds[0].artifact_id | cut -d':' -f 2)
+#
+#  # create version for ami param
+#  shipctl post_resource_state $CURR_JOB versionName $AMI_ID
+#  shipctl post_resource_state $OUT_AMI_SEC_APPRD versionName $AMI_ID
 }
 
 main() {
