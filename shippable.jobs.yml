@@ -149,6 +149,8 @@ jobs:
             cd $(shipctl get_resource_state ans_sec_ops)
             pushd $(shipctl get_resource_meta infra_state)
             export VPC_ID=$(cat version.json | jq -r '.'version.propertyBag.VPC_ID)
+            export VPC_SUBNET_ID=$(cat version.json | jq -r '.'version.propertyBag.VPC_SUBNET_ID)
+            export VPC_IGW_ID=$(cat version.json | jq -r '.'version.propertyBag.VPC_IGW_ID)
             popd
             shipctl replace an_ami_deprov.yml
             ansible-playbook -v an_ami_deprov.yml

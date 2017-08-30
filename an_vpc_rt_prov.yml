@@ -20,11 +20,7 @@
             gateway_id: "{{ VPC_IGW_ID }}"
       register: publicRT
 
-    - debug:
-        var: publicRT
-
-#    - name: run cmd
-#      shell: |
-#        shipctl post_resource_state "{{ AMI_STATE_RES_NAME }}" versionName "build-${BUILD_NUMBER}"
-#        shipctl put_resource_state "{{ AMI_STATE_RES_NAME }}" VPC_IGW_ID "{{ igw.gateway_id }}"
-#
+    - name: run cmd
+      shell: |
+        shipctl post_resource_state "{{ AMI_STATE_RES_NAME }}" versionName "build-${BUILD_NUMBER}"
+        shipctl put_resource_state "{{ AMI_STATE_RES_NAME }}" VPC_RT_ID "{{ publicRT.route_table.id }}"

@@ -5,10 +5,24 @@
   vars:
     AMI_STATE_RES_NAME: "${AMI_STATE_RES_NAME}"
     VPC_SUBNET_CIDR_BLOCK: "${VPC_SUBNET_CIDR_BLOCK}"
-    VPC_ID: "${VPC_ID}"
     VPC_CIDR_BLOCK: "${VPC_CIDR_BLOCK}"
     VPC_NAME: "${VPC_NAME}"
+    VPC_ID: "${VPC_ID}"
+    VPC_SUBNET_ID: "${VPC_SUBNET_ID}"
+    VPC_IGW_ID: "${VPC_IGW_ID}"
   tasks:
+    - name: Delete RT for VPC {{ VPC_NAME }}
+      ec2_vpc_route_table:
+        vpc_id: "{{ VPC_ID }}"
+        tags:
+          Name: Public
+        subnets:
+          - "{{ VPC_SUBNET_ID }}"
+        routes:
+          - dest: 0.0.0.0/0
+            gateway_id: "{{ VPC_IGW_ID }}"
+        state: absent
+
     - name: Delete Subnet for VPC {{ VPC_NAME }}
       ec2_vpc_subnet:
         vpc_id: "{{ VPC_ID }}"
