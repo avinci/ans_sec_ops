@@ -51,10 +51,6 @@
 #        state: absent
 #      register: igw
 #
-
-
-
-
 #    - name: Set up public subnet route table
 #      ec2_vpc_route_table:
 #        state: absent
@@ -67,7 +63,10 @@
 #          - dest: 0.0.0.0/0
 #            gateway_id: "{{ igw.gateway_id }}"
 #      register: publicRT
-#
+
+
+
+
 #    - name: public ec2 group
 #      ec2_group:
 #        state: absent
