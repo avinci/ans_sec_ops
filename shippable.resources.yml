@@ -74,51 +74,22 @@ resources:
         VPC_SUBNET_NAME: "ami_vpc_subnet_pub"
         VPC_SUBNET_CIDR_BLOCK: "200.0.0.0/24"
 
-# OUT AWS AMI VPC IDs
-  - name: ami_vpc_subnet_info
+# Base ECS AMI ID
+  - name: ami_sec_approved
     type: params
     version:
       params:
         SEED: "initial_version"
 
 
-## OUT AWS AMI VPC IDs
-#  - name: ami_vpc_conf
-#    type: params
-#    version:
-#      params:
-#        SEED: "initial_version"
-#
-## OUT AWS TEST VPC IDs
-#  - name: test_vpc_conf
-#    type: params
-#    version:
-#      params:
-#        SEED: "initial_version"
-#
-## OUT AWS PROD VPC IDs
-#  - name: prod_vpc_conf
-#    type: params
-#    version:
-#      params:
-#        SEED: "initial_version"
-#
-## AWS PEM key
-#  - name: aws_pem
-#    type: integration
-#    integration: "demo_aws_pem"
-#
-## Base ECS AMI ID
-#  - name: ami_sec_approved
-#    type: params
-#    version:
-#      params:
-#        SEED: "initial_version"
-#
-## TERRAFORM STATE for TEST
-#  - name: test_tf_state
-#    type: state
-#
+# AMI VPC Creation Config
+  - name: ami_create_conf
+    type: params
+    version:
+      params:
+        BASE_EC2_AMI: "ami-d15a75c7"
+
+
 ## Reference to ECS Test Cluster
 #  - name: test_env_ecs
 #    type: cluster
@@ -126,10 +97,6 @@ resources:
 #    pointer:
 #      sourceName : "test-aws"
 #      region: "us-east-1"
-#
-## TERRAFORM STATE for PROD
-#  - name: prod_tf_state
-#    type: state
 #
 ## Reference to ECS PROD Cluster
 #  - name: prod_env_ecs

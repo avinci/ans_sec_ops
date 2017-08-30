@@ -23,6 +23,10 @@
             gateway_id: "{{ VPC_IGW_ID }}"
         state: absent
 
+    - name: run cmd
+      shell: |
+        shipctl post_resource_state "{{ AMI_STATE_RES_NAME }}" VPC_RT_ID DELETED
+
     - name: Delete Public SG group
       ec2_group:
         name: publicSG
@@ -46,6 +50,10 @@
             to_port: 65535
             cidr_ip: "{{ VPC_SUBNET_CIDR_BLOCK }}"
         state: absent
+
+    - name: run cmd
+      shell: |
+        shipctl post_resource_state "{{ AMI_STATE_RES_NAME }}" VPC_SG_ID DELETED
 
     - name: Delete Subnet for VPC {{ VPC_NAME }}
       ec2_vpc_subnet:

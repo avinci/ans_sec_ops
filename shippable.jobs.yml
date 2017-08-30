@@ -182,23 +182,20 @@ jobs:
       - OUT: infra_state
 
 
-## CREATE AWS AMI used to deploy ECS VMs with PACKER
-#  - name: build_ecs_ami
-#    type: runSh
-#    steps:
-#      - IN: aws_creds
-#        switch: off
-#      - IN: auto_repo
-#        switch: off
-#      - IN: ami_vpc_conf
-#      - TASK:
-#        - script: . IN/auto_repo/gitRepo/shipUtil.sh
-#        - script: . IN/auto_repo/gitRepo/awsBuildAMI/basePack.sh
-#      - OUT: ami_sec_approved
-#    on_success:
-#      - script: echo "SUCCESS"
-#    on_failure:
-#      - script: echo "FAILURE"
+# CREATE AWS AMI used to deploy ECS VMs with PACKER
+  - name: build_ecs_ami
+    type: runSh
+    steps:
+      - IN: aws_region
+      - IN: ami_create_conf
+      - IN: infra_state
+      - IN: aws_creds
+        switch: off
+      - IN: ans_sec_ops
+        switch: off
+      - TASK:
+        - script: . IN/ans_sec_ops/gitRepo/pk_basePack.sh
+      - OUT: ami_sec_approved
 
 #---------------------------------------------------------------#
 #------------------- BUILD/CI with SHIPPABLE CI ----------------#
