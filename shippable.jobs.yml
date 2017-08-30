@@ -80,7 +80,7 @@ jobs:
       - IN: ami_state_res_name
         switch: off
       - IN: infra_state
-      - IN: prov_ami_vpc
+      - IN: prov_ami_vpc_subnet
       - IN: aws_creds
         switch: off
       - IN: ans_sec_ops
@@ -106,7 +106,6 @@ jobs:
         switch: off
       - IN: infra_state
       - IN: prov_ami_vpc_igw
-      - IN: prov_ami_vpc_subnet
       - IN: aws_creds
         switch: off
       - IN: ans_sec_ops
@@ -133,7 +132,7 @@ jobs:
       - IN: ami_state_res_name
         switch: off
       - IN: infra_state
-      - IN: prov_ami_vpc
+      - IN: prov_ami_vpc_igw
       - IN: aws_creds
         switch: off
       - IN: ans_sec_ops
