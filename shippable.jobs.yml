@@ -47,7 +47,6 @@ jobs:
     type: runSh
     steps:
       - IN: infra_state
-      - IN: ami_vpc_info
       - IN: ami_vpc_subnet_conf
       - IN: aws_creds
         switch: off
