@@ -66,7 +66,7 @@ resources:
         AWS_REGION: "us-east-1"
         VPC_SUBNET_NAME: "ami_vpc_subnet_pub"
         VPC_SUBNET_CIDR_BLOCK: "200.0.0.0/24"
-        VPC_SUBNET_INFO_OUT: "ami_vpc_subnet_info"
+        VPC_SUBNET_INFO_OUT: "infra_state"
 
 # OUT AWS AMI VPC IDs
   - name: ami_vpc_subnet_info
