@@ -57,10 +57,10 @@ jobs:
         - script: |
             export AWS_ACCESS_KEY_ID=$(shipctl get_integration_resource_field aws_creds aws_access_key_id)
             export AWS_SECRET_ACCESS_KEY=$(shipctl get_integration_resource_field aws_creds aws_secret_access_key)
+            cd $(shipctl get_resource_meta infra_state)
+            ls -al
             export VPC_ID=$(shipctl get_params_resource infra_state VPC_ID)
             echo VPC_ID=$VPC_ID
-            export VPC_SUBNET_CIDR_BLOCK=$(shipctl get_params_resource ami_vpc_subnet_conf VPC_SUBNET_CIDR_BLOCK)
-            echo VPC_SUBNET_CIDR_BLOCK=$VPC_SUBNET_CIDR_BLOCK
             cd $(shipctl get_resource_state ans_sec_ops)
             shipctl replace an_vpc_subnet_prov.yml
             cat an_vpc_subnet_prov.yml
