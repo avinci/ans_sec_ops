@@ -9,7 +9,6 @@
   tasks:
     - name: Create Public SG group
       ec2_group:
-        state: absent
         name: publicSG
         description: Public access Security Group
         vpc_id: "{{ VPC_ID }}"
