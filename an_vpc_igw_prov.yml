@@ -7,7 +7,6 @@
     VPC_ID: "${VPC_ID}"
   tasks:
     - name: Create IGW
-    - name: Create internet gateway
       ec2_vpc_igw:
         vpc_id: "{{ VPC_ID }}"
       register: igw
