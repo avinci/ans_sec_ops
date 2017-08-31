@@ -11,15 +11,6 @@
       shell: |
         shipctl post_resource_state "{{ STATE_RES_NAME }}" versionName "build-${BUILD_NUMBER}"
 
-    - name: Create ECS Cluster {{ ECS_CLUSTER_NAME }}
-      ecs_cluster:
-        name: "{{ ECS_CLUSTER_NAME }}"
-        state: absent
-
-    - name: run cmd
-      shell: |
-        shipctl put_resource_state "{{ STATE_RES_NAME }}" CLUSTER_ARN DELETED
-
     - name: Terminate ec2 instances with tag "${INST_TAG}"
       ec2:
         state: 'absent'
@@ -32,3 +23,13 @@
         shipctl put_resource_state "{{ STATE_RES_NAME }}" "INST_{{ item.ami_launch_index }}_PUBLIC_IP" DELETED
         shipctl put_resource_state "{{ STATE_RES_NAME }}" "INST_{{ item.ami_launch_index }}_ID" DELETED
       with_items: "{{ ec2.instances }}"
+
+    - name: Create ECS Cluster {{ ECS_CLUSTER_NAME }}
+      ecs_cluster:
+        name: "{{ ECS_CLUSTER_NAME }}"
+        state: absent
+
+    - name: run cmd
+      shell: |
+        shipctl put_resource_state "{{ STATE_RES_NAME }}" CLUSTER_ARN DELETED
+
