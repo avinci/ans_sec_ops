@@ -4,9 +4,9 @@
 
   vars:
     ECS_CLUSTER_NAME: "${ECS_CLUSTER_NAME}"
+    INST_TAG: "${INST_TAG}"
     STATE_RES_NAME: "${STATE_RES_NAME}"
   tasks:
-
     - name: run cmd
       shell: |
         shipctl post_resource_state "{{ STATE_RES_NAME }}" versionName "build-${BUILD_NUMBER}"
@@ -19,3 +19,16 @@
     - name: run cmd
       shell: |
         shipctl put_resource_state "{{ STATE_RES_NAME }}" CLUSTER_ARN DELETED
+
+    - name: Terminate ec2 instances with tag "${INST_TAG}"
+      ec2:
+        state: 'absent'
+        instance_tags:
+          Name: "{{ INST_TAG }}"
+      register: ec2
+
+    - name: run cmd
+      shell: |
+        shipctl put_resource_state "{{ STATE_RES_NAME }}" "INST_{{ item.ami_launch_index }}_PUBLIC_IP" DELETED
+        shipctl put_resource_state "{{ STATE_RES_NAME }}" "INST_{{ item.ami_launch_index }}_ID" DELETED
+      with_items: "{{ ec2.instances }}"
