@@ -159,21 +159,21 @@ jobs:
             ansible-playbook -v an_vpc_deprov.yml
       - OUT: ami_infra_state
 
-## CREATE AWS AMI used to deploy ECS VMs with PACKER
-#  - name: build_ecs_ami
-#    type: runSh
-#    steps:
-#      - IN: prov_ami_vpc_sg_group
-#      - IN: aws_region
-#      - IN: ami_create_conf
-#      - IN: ami_infra_state
-#      - IN: aws_creds
-#        switch: off
-#      - IN: ans_sec_ops
-#        switch: off
-#      - TASK:
-#        - script: . IN/ans_sec_ops/gitRepo/pk_basePack.sh
-#      - OUT: ami_sec_approved
+# CREATE AWS AMI used to deploy ECS VMs with PACKER
+  - name: build_ecs_ami
+    type: runSh
+    steps:
+      - IN: prov_ami_vpc_sg_group
+      - IN: aws_region
+      - IN: ami_create_conf
+      - IN: ami_infra_state
+      - IN: aws_creds
+        switch: off
+      - IN: ans_sec_ops
+        switch: off
+      - TASK:
+        - script: . IN/ans_sec_ops/gitRepo/pk_basePack.sh
+      - OUT: ami_sec_approved
 
 #---------------------------------------------------------------#
 #------------------------- INST PROF Setup -----------------------#
