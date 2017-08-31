@@ -9,6 +9,7 @@
     - name: Create ECS Cluster {{ ECS_NAME }}
       ecs_cluster:
         name: "{{ ECS_NAME }}"
+        state: present
       register: ecs
 
     - debug:
