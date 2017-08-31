@@ -492,16 +492,16 @@ jobs:
     on_failure:
       - script: touch /build/state/failure.txt
 
-## CREATE a production ready release
-#  - name: release_app
-#    type: release
-#    steps:
-#      - IN: seed_app_ver
-#      - IN: sit
-#      - IN: deploy_app_test
-#        switch: off
-#      - TASK: managed
-#        bump: patch
+# CREATE a production ready release
+  - name: release_app
+    type: release
+    steps:
+      - IN: seed_app_ver
+      - IN: sit
+      - IN: deploy_app_test
+        switch: off
+      - TASK: managed
+        bump: patch
 
 #---------------------------------------------------------------#
 #----------------------- CD to Production ----------------------#
