@@ -3,7 +3,7 @@ set -o pipefail
 
 export CURR_JOB="build_ecs_ami"
 export RES_REPO="ans_sec_ops"
-export RES_VPC_AMI="infra_state"
+export RES_VPC_AMI="ami_infra_state"
 export RES_AWS_CREDS="aws_creds"
 export OUT_AMI_SEC_APPRD="ami_sec_approved"
 

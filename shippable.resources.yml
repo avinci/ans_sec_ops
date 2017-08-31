@@ -5,7 +5,7 @@ resources:
 #---------------------------------------------------------------#
 
 # Infra state
-  - name: infra_state
+  - name: ami_infra_state
     type: state
 
 # AWS credentials
@@ -56,7 +56,7 @@ resources:
     type: params
     version:
       params:
-        AMI_STATE_RES_NAME: "infra_state"
+        AMI_STATE_RES_NAME: "ami_infra_state"
 
 # AMI VPC Creation Config
   - name: ami_vpc_conf

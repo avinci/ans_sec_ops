@@ -10,7 +10,7 @@ export RES_AWS_CREDS="aws_creds"
 export STATE_RES="inst_tf_state"
 export TF_STATEFILE="terraform.tfstate"
 
-export OUT_INST_PROF="infra_state"
+export OUT_INST_PROF="inst_prof_name"
 
 # get the path where gitRepo code is available
 export RES_REPO_STATE=$(shipctl get_resource_state $RES_REPO)
