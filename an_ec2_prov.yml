@@ -32,6 +32,11 @@
             Name: "{{ INST_TAG }}"
       register: ec2
 
+
+    - debug:
+        var: item
+      with_indexed_items: "{{ ec2.instances }}"
+
     - name: run cmd
       shell: |
         shipctl put_resource_state "{{ STATE_RES_NAME }}" "INST_{{ item.ami_launch_index }}_PUBLIC_IP" "{{ item.public_ip }}"
