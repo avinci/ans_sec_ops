@@ -4,18 +4,33 @@
 
   vars:
     ECS_CLUSTER_NAME: "${ECS_CLUSTER_NAME}"
+    INST_COUNT: "${INST_COUNT}"
     INST_TAG: "${INST_TAG}"
+    INST_TYPE: "${INST_TYPE}"
+    VPC_SUBNET_ID: "${VPC_SUBNET_ID}"
+    INST_PROF_NAME: "${INST_PROF_NAME}"
     STATE_RES_NAME: "${STATE_RES_NAME}"
   tasks:
     - name: run cmd
       shell: |
         shipctl post_resource_state "{{ STATE_RES_NAME }}" versionName "build-${BUILD_NUMBER}"
 
-    - name: Terminate ec2 instances with tag "${INST_TAG}"
+    - name: Terminate {{ INST_COUNT }} instances with tag {{ INST_TAG }}
       ec2:
-        state: 'absent'
-        instance_tags:
-          Name: "{{ INST_TAG }}"
+         key_name: demo-key
+         group: default
+         vpc_subnet_id: "{{ VPC_SUBNET_ID }}"
+         instance_type: "{{ INST_TYPE }}"
+         image: ami-9eb4b1e5
+         assign_public_ip: yes
+         instance_profile_name: "{{ INST_PROF_NAME }}"
+         wait: true
+         exact_count: "{{ INST_COUNT }}"
+         user_data: "#!/bin/bash \n echo ECS_CLUSTER=${ECS_CLUSTER_NAME} >> /etc/ecs/ecs.config"
+         count_tag:
+            Name: "{{ INST_TAG }}"
+         instance_tags:
+            Name: "{{ INST_TAG }}"
       register: ec2
 
     - name: run cmd
