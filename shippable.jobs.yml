@@ -278,7 +278,7 @@ jobs:
       - OUT: test_infra_state
 
 # PROV Test VPC Public RT with Ansible
-  - name: prov_ami_vpc_rt
+  - name: prov_test_vpc_rt
     type: runSh
     steps:
       - IN: aws_region
