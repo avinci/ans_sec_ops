@@ -24,6 +24,10 @@
          image: ami-9eb4b1e5
          wait: true
          exact_count: 0
+         count_tag:
+            Name: "{{ INST_TAG }}"
+         instance_tags:
+            Name: "{{ INST_TAG }}"
       register: ec2
 
     - name: run cmd
