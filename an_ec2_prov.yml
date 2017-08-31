@@ -32,12 +32,8 @@
             Name: "{{ INST_TAG }}"
       register: ec2
 
-    - debug:
-        var: ec2.instances
-      #with_items: "{{ ec2.instances }}"
-
-#    - name: run cmd
-#      shell: |
-#        shipctl put_resource_state "{{ STATE_RES_NAME }}" "INST_{{ item.ami_launch_index }}_PUBLIC_IP" "{{ item.public_ip }}"
-#        shipctl put_resource_state "{{ STATE_RES_NAME }}" "INST_{{ item.ami_launch_index }}_ID" "{{ item.id }}"
-#      with_items: "{{ ec2.instances }}"
+    - name: run cmd
+      shell: |
+        shipctl put_resource_state "{{ STATE_RES_NAME }}" "INST_{{ item.ami_launch_index }}_PUBLIC_IP" "{{ item.public_ip }}"
+        shipctl put_resource_state "{{ STATE_RES_NAME }}" "INST_{{ item.ami_launch_index }}_ID" "{{ item.id }}"
+      with_items: "{{ ec2.instances }}"
