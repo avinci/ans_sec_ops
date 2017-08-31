@@ -734,8 +734,6 @@ jobs:
   - name: deprov_prod_infra
     type: runSh
     steps:
-      - IN: release_app
-        switch: off
       - IN: aws_region
       - IN: prod_state_res_name
         switch: off
