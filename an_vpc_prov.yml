@@ -13,7 +13,6 @@
         cidr_block: "{{ VPC_CIDR_BLOCK }}"
         tags:
           module: "{{ VPC_NAME }}"
-        tenancy: dedicated
       register: vpc
 
     - name: run cmd
