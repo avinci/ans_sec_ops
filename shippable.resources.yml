@@ -57,7 +57,7 @@ resources:
     type: params
     version:
       params:
-        AMI_STATE_RES_NAME: "ami_infra_state"
+        STATE_RES_NAME: "ami_infra_state"
 
 # AMI VPC Creation Config
   - name: ami_vpc_conf
@@ -101,7 +101,7 @@ resources:
     type: params
     version:
       params:
-        AMI_STATE_RES_NAME: "test_infra_state"
+        STATE_RES_NAME: "test_infra_state"
 
 # Test VPC Creation Config
   - name: test_vpc_conf
@@ -119,16 +119,23 @@ resources:
         VPC_SUBNET_NAME: "test_vpc_subnet_pub"
         VPC_SUBNET_CIDR_BLOCK: "210.0.0.0/24"
 
+# Test Cluster  Name
+  - name: test_cluster_name
+    type: params
+    version:
+      params:
+        ECS_NAME: "test-aws"
+
+# Reference to ECS Test Cluster
+  - name: test_env_ecs
+    type: cluster
+    integration: "demo_aws_key"
+    pointer:
+      sourceName : "test-aws"
+      region: "us-east-1"
 
 
-## Reference to ECS Test Cluster
-#  - name: test_env_ecs
-#    type: cluster
-#    integration: "demo_aws_key"
-#    pointer:
-#      sourceName : "test-aws"
-#      region: "us-east-1"
-#
+
 ## Reference to ECS PROD Cluster
 #  - name: prod_env_ecs
 #    type: cluster

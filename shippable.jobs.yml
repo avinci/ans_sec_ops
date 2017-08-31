@@ -330,6 +330,29 @@ jobs:
             ansible-playbook -v an_vpc_sg_group_prov.yml
       - OUT: test_infra_state
 
+# PROV Test ECS Cluster with Ansible
+  - name: prov_test_ecs
+    type: runSh
+    steps:
+      - IN: test_cluster_name
+      - IN: aws_region
+      - IN: test_state_res_name
+        switch: off
+      - IN: prov_test_vpc
+      - IN: aws_creds
+        switch: off
+      - IN: ans_sec_ops
+        switch: off
+      - TASK:
+        - script: |
+            export AWS_ACCESS_KEY_ID=$(shipctl get_integration_resource_field aws_creds aws_access_key_id)
+            export AWS_SECRET_ACCESS_KEY=$(shipctl get_integration_resource_field aws_creds aws_secret_access_key)
+            cd $(shipctl get_resource_state ans_sec_ops)
+            shipctl replace an_vpc_ecs_prov.yml
+            ansible-playbook -v an_vpc_ecs_prov.yml
+      - OUT: test_infra_state
+      - OUT: test_env_ecs
+
 # DEPROV AMI with Ansible
   - name: deprov_test_vpc
     type: runSh

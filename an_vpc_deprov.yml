@@ -3,7 +3,7 @@
   gather_facts: False
 
   vars:
-    AMI_STATE_RES_NAME: "${AMI_STATE_RES_NAME}"
+    STATE_RES_NAME: "${STATE_RES_NAME}"
     VPC_SUBNET_CIDR_BLOCK: "${VPC_SUBNET_CIDR_BLOCK}"
     VPC_CIDR_BLOCK: "${VPC_CIDR_BLOCK}"
     VPC_NAME: "${VPC_NAME}"
@@ -25,7 +25,7 @@
 
     - name: run cmd
       shell: |
-        shipctl post_resource_state "{{ AMI_STATE_RES_NAME }}" VPC_RT_ID DELETED
+        shipctl post_resource_state "{{ STATE_RES_NAME }}" VPC_RT_ID DELETED
 
     - name: Delete Public SG group
       ec2_group:
@@ -53,7 +53,7 @@
 
     - name: run cmd
       shell: |
-        shipctl put_resource_state "{{ AMI_STATE_RES_NAME }}" VPC_SG_ID DELETED
+        shipctl put_resource_state "{{ STATE_RES_NAME }}" VPC_SG_ID DELETED
 
     - name: Delete Subnet for VPC {{ VPC_NAME }}
       ec2_vpc_subnet:
@@ -63,7 +63,7 @@
 
     - name: run cmd
       shell: |
-        shipctl put_resource_state "{{ AMI_STATE_RES_NAME }}" VPC_SUBNET_ID DELETED
+        shipctl put_resource_state "{{ STATE_RES_NAME }}" VPC_SUBNET_ID DELETED
 
     - name: Delete internet gateway for VPC {{ VPC_NAME }}
       ec2_vpc_igw:
@@ -72,7 +72,7 @@
 
     - name: run cmd
       shell: |
-        shipctl put_resource_state "{{ AMI_STATE_RES_NAME }}" VPC_IGW_ID DELETED
+        shipctl put_resource_state "{{ STATE_RES_NAME }}" VPC_IGW_ID DELETED
 
     - name: Delete VPC {{ VPC_NAME }}
       ec2_vpc_net:
@@ -86,4 +86,4 @@
 
     - name: run cmd
       shell: |
-        shipctl put_resource_state "{{ AMI_STATE_RES_NAME }}" VPC_ID DELETED
+        shipctl put_resource_state "{{ STATE_RES_NAME }}" VPC_ID DELETED
