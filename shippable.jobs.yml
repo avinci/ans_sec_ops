@@ -359,6 +359,8 @@ jobs:
     type: runSh
     steps:
       - IN: test_ec2_conf
+      - IN: test_cluster_conf
+        switch: off
       - IN: inst_prof_name
         switch: off
       - IN: aws_region

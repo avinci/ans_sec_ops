@@ -25,6 +25,7 @@
          instance_profile_name: "{{ INST_PROF_NAME }}"
          wait: true
          exact_count: "{{ INST_COUNT }}"
+         user_data: "#!/bin/bash \n echo ECS_CLUSTER=${ECS_CLUSTER_NAME} >> /etc/ecs/ecs.config"
          count_tag:
             Name: "{{ INST_TAG }}"
          instance_tags:
