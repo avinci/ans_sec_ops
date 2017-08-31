@@ -731,7 +731,7 @@ jobs:
 #---------------------------------------------------------------#
 
 # DEPROV PROD Infra with Ansible
-  - name: deprov_test_infra
+  - name: deprov_prod_infra
     type: runSh
     steps:
       - IN: release_app
