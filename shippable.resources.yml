@@ -139,7 +139,7 @@ resources:
     type: params
     version:
       params:
-        INST_COUNT: 2
+        INST_COUNT: 0
         INST_TAG: "test_ecs_inst"
         INST_TYPE: "t2.micro"
 
