@@ -209,6 +209,7 @@ jobs:
   - name: prov_test_vpc
     type: runSh
     steps:
+      - IN: create_app_man
       - IN: aws_region
       - IN: test_state_res_name
         switch: off
@@ -390,6 +391,7 @@ jobs:
   - name: deprov_test_infra
     type: runSh
     steps:
+      - IN: release_app
       - IN: aws_region
       - IN: test_state_res_name
         switch: off
