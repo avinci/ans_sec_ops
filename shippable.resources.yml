@@ -109,25 +109,25 @@ resources:
 ##---------------------------------------------------------------#
 ##----------------------- BUILD/CI Resources --------------------#
 ##---------------------------------------------------------------#
-#
-## Docker Image packaging sample Node app
-#  - name: demo_doc_img
-#    type: image
-#    integration: "demo_dh"
-#    pointer:
-#      sourceName: "avinci/ci_push_docker_hub"
-#    seed:
-#      versionName: "latest"
-#
-## Docker Options for packaged
-#  - name: doc_img_opts
-#    type: dockerOptions
-#    version:
-##      memory: 256
-##      cpuShares: 256
-#      portMappings:
-#        - 80:80
-#
+
+# Docker Image packaging sample Node app
+  - name: demo_doc_img
+    type: image
+    integration: "demo_dh"
+    pointer:
+      sourceName: "avinci/ci_push_docker_hub"
+    seed:
+      versionName: "latest"
+
+# Docker Options for packaged
+  - name: doc_img_opts
+    type: dockerOptions
+    version:
+#      memory: 256
+#      cpuShares: 256
+      portMappings:
+        - 80:80
+
 ##---------------------------------------------------------------#
 ##------------- Application Release Automation Resources --------#
 ##---------------------------------------------------------------#
