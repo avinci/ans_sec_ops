@@ -453,6 +453,7 @@ jobs:
     type: runSh
     steps:
       - IN: release_app
+        switch: off
       - IN: aws_region
       - IN: test_state_res_name
         switch: off
