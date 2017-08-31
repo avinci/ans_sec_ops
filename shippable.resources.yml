@@ -120,7 +120,7 @@ resources:
         VPC_SUBNET_CIDR_BLOCK: "210.0.0.0/24"
 
 # Test Cluster  Name
-  - name: test_cluster_name
+  - name: test_cluster_conf
     type: params
     version:
       params:
@@ -134,6 +134,14 @@ resources:
       sourceName : "test-aws"
       region: "us-east-1"
 
+# Test Cluster  Name
+  - name: test_ec2_conf
+    type: params
+    version:
+      params:
+        INST_COUNT: 2
+        INST_TAG: "test_ecs_inst"
+        INST_TYPE: "t2.micro"
 
 
 ## Reference to ECS PROD Cluster

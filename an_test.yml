@@ -5,15 +5,24 @@
   vars:
     uberCIDRBlock: "10.10.0.0/16"
     publicSNCIDRBlock: "10.10.0.0/24"
-
-#  vars:
-#    numbers:
-#      - name: "first"
-#        int: "1"
-#      - name: "second"
-#        int: "2"
+    numbers:
+      - name: "first"
+        int: "1"
+      - name: "second"
+        int: "2"
 
   tasks:
+#    - debug:
+#        var: "{{ item.0 }}"
+#      with_indexed_items: "{{ numbers }}"
+
+
+    - name: indexed loop demo
+      debug:
+        msg: "at array position {{ item.0 }} there is a value {{ item.1.name }}"
+      with_indexed_items:
+        - "{{ numbers }}"
+
 #    - name: Register output
 #      command: "/bin/echo {{ item.int }}"
 #      register: echo_out
@@ -25,64 +34,64 @@
 #    - debug: msg="{{ item.start }}"
 #      with_items: "{{ echo_out.results }}"
 
-    - name: Create VPC
-      ec2_vpc_net:
-        name: avinci_vpc
-        cidr_block: "{{ uberCIDRBlock }}"
-        region: us-east-1
-        tags:
-          module: avinci_vpc
-        tenancy: dedicated
-      register: vpc
-
-    - name: Create subnet for public access
-      ec2_vpc_subnet:
-        vpc_id: "{{ vpc.vpc.id }}"
-        cidr: "{{ publicSNCIDRBlock }}"
-        resource_tags:
-          Name: publicSN
-      register: publicSN
-
-    - name: Create internet gateway
-      ec2_vpc_igw:
-        vpc_id: "{{ vpc.vpc.id }}"
-      register: igw
-
-    - name: Set up public subnet route table
-      ec2_vpc_route_table:
-        vpc_id: "{{ vpc.vpc.id }}"
-        tags:
-          Name: Public
-        subnets:
-          - "{{ publicSN.subnet.id }}"
-        routes:
-          - dest: 0.0.0.0/0
-            gateway_id: "{{ igw.gateway_id }}"
-      register: publicRT
-
-    - name: public ec2 group
-      ec2_group:
-        name: publicSG
-        description: Public access Security Group
-        vpc_id: "{{ vpc.vpc.id }}"
-        rules:
-          - proto: tcp
-            from_port: 80
-            to_port: 80
-            cidr_ip: 0.0.0.0/0
-          - proto: tcp
-            from_port: 22
-            to_port: 22
-            cidr_ip: 0.0.0.0/0
-          - proto: tcp
-            from_port: 8080
-            to_port: 8080
-            cidr_ip: 0.0.0.0/0
-          - proto: tcp
-            from_port: 0
-            to_port: 65535
-            cidr_ip: "{{ publicSNCIDRBlock }}"
-      register: publicSG
+#    - name: Create VPC
+#      ec2_vpc_net:
+#        name: avinci_vpc
+#        cidr_block: "{{ uberCIDRBlock }}"
+#        region: us-east-1
+#        tags:
+#          module: avinci_vpc
+#        tenancy: dedicated
+#      register: vpc
+#
+#    - name: Create subnet for public access
+#      ec2_vpc_subnet:
+#        vpc_id: "{{ vpc.vpc.id }}"
+#        cidr: "{{ publicSNCIDRBlock }}"
+#        resource_tags:
+#          Name: publicSN
+#      register: publicSN
+#
+#    - name: Create internet gateway
+#      ec2_vpc_igw:
+#        vpc_id: "{{ vpc.vpc.id }}"
+#      register: igw
+#
+#    - name: Set up public subnet route table
+#      ec2_vpc_route_table:
+#        vpc_id: "{{ vpc.vpc.id }}"
+#        tags:
+#          Name: Public
+#        subnets:
+#          - "{{ publicSN.subnet.id }}"
+#        routes:
+#          - dest: 0.0.0.0/0
+#            gateway_id: "{{ igw.gateway_id }}"
+#      register: publicRT
+#
+#    - name: public ec2 group
+#      ec2_group:
+#        name: publicSG
+#        description: Public access Security Group
+#        vpc_id: "{{ vpc.vpc.id }}"
+#        rules:
+#          - proto: tcp
+#            from_port: 80
+#            to_port: 80
+#            cidr_ip: 0.0.0.0/0
+#          - proto: tcp
+#            from_port: 22
+#            to_port: 22
+#            cidr_ip: 0.0.0.0/0
+#          - proto: tcp
+#            from_port: 8080
+#            to_port: 8080
+#            cidr_ip: 0.0.0.0/0
+#          - proto: tcp
+#            from_port: 0
+#            to_port: 65535
+#            cidr_ip: "{{ publicSNCIDRBlock }}"
+#      register: publicSG
 
 #    - name: Create IAM role with policy
 #      iam_role:
