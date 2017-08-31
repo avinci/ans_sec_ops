@@ -1,0 +1,21 @@
+- hosts: localhost
+  connection: local
+  gather_facts: False
+
+  vars:
+    ECS_CLUSTER_NAME: "${ECS_CLUSTER_NAME}"
+    STATE_RES_NAME: "${STATE_RES_NAME}"
+  tasks:
+
+    - name: run cmd
+      shell: |
+        shipctl post_resource_state "{{ STATE_RES_NAME }}" versionName "build-${BUILD_NUMBER}"
+
+    - name: Create ECS Cluster {{ ECS_CLUSTER_NAME }}
+      ecs_cluster:
+        name: "{{ ECS_CLUSTER_NAME }}"
+        state: absent
+
+    - name: run cmd
+      shell: |
+        shipctl put_resource_state "{{ STATE_RES_NAME }}" CLUSTER_ARN DELETED

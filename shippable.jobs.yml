@@ -354,10 +354,34 @@ jobs:
       - OUT: test_infra_state
       - OUT: test_env_ecs
 
-# DEPROV AMI with Ansible
+# DEPROV TEST Infra with Ansible
+  - name: deprov_test_infra
+    type: runSh
+    steps:
+      - IN: aws_region
+      - IN: test_state_res_name
+        switch: off
+      - IN: test_infra_state
+      - IN: test_cluster_name
+        switch: off
+      - IN: aws_creds
+        switch: off
+      - IN: ans_sec_ops
+        switch: off
+      - TASK:
+        - script: |
+            export AWS_ACCESS_KEY_ID=$(shipctl get_integration_resource_field aws_creds aws_access_key_id)
+            export AWS_SECRET_ACCESS_KEY=$(shipctl get_integration_resource_field aws_creds aws_secret_access_key)
+            cd $(shipctl get_resource_state ans_sec_ops)
+            shipctl replace an_test_deprov.yml
+            ansible-playbook -v an_test_deprov.yml
+      - OUT: test_infra_state
+
+# DEPROV TEST VPC with Ansible
   - name: deprov_test_vpc
     type: runSh
     steps:
+      - IN: deprov_test_infra
       - IN: aws_region
       - IN: test_state_res_name
         switch: off
