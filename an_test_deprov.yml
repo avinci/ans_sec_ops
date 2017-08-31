@@ -22,6 +22,7 @@
          vpc_subnet_id: "{{ VPC_SUBNET_ID }}"
          instance_type: "{{ INST_TYPE }}"
          image: ami-9eb4b1e5
+         wait: true
          exact_count: 0
       register: ec2
 
