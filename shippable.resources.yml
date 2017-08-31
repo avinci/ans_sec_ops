@@ -124,7 +124,7 @@ resources:
     type: params
     version:
       params:
-        ECS_NAME: "test-aws"
+        ECS_CLUSTER_NAME: "test-aws"
 
 # Reference to ECS Test Cluster
   - name: test_env_ecs
