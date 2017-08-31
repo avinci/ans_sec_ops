@@ -383,7 +383,6 @@ jobs:
             export VPC_SUBNET_ID=$(cat version.json | jq -r '.'version.propertyBag.VPC_SUBNET_ID)
             popd
             shipctl replace an_ec2_prov.yml
-            cat an_ec2_prov.yml
             ansible-playbook -v an_ec2_prov.yml
       - OUT: test_infra_state
 
