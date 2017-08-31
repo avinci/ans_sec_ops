@@ -231,7 +231,7 @@ jobs:
     type: runSh
     steps:
       - IN: aws_region
-      - IN: ami_state_res_name
+      - IN: test_state_res_name
         switch: off
       - IN: test_infra_state
       - IN: prov_test_vpc
