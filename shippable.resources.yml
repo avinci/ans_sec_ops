@@ -24,15 +24,6 @@ resources:
       sourceName: "avinci/ans_sec_ops"
       branch: master
 
-# VPC Creation Config
-  - name: net_conf
-    type: params
-    version:
-      params:
-        PROD_VPC: "prod_vpc"
-        PROD_NETWORK_CIDR: "100.0.0.0/16"
-        PROD_PUBLIC_CIDR: "100.0.0.0/24"
-
 # Networking TERRAFORM State
   - name: inst_tf_state
     type: state
