@@ -1,12 +1,8 @@
 resources:
 
 #---------------------------------------------------------------#
-#------------------------- INFRA Resources ---------------------#
+#-------------------- Common INFRA Resources -------------------#
 #---------------------------------------------------------------#
-
-# Infra state
-  - name: ami_infra_state
-    type: state
 
 # AWS credentials
   - name: aws_creds
@@ -28,21 +24,18 @@ resources:
       sourceName: "avinci/ans_sec_ops"
       branch: master
 
-# Networking TERRAFORM State
-  - name: inst_tf_state
-    type: state
-
 # VPC Creation Config
   - name: net_conf
     type: params
     version:
       params:
-        TEST_VPC: "test_vpc"
-        TEST_NETWORK_CIDR: "210.0.0.0/16"
-        TEST_PUBLIC_CIDR: "210.0.0.0/24"
         PROD_VPC: "prod_vpc"
         PROD_NETWORK_CIDR: "100.0.0.0/16"
         PROD_PUBLIC_CIDR: "100.0.0.0/24"
+
+# Networking TERRAFORM State
+  - name: inst_tf_state
+    type: state
 
 # OUT INST PROF INFO
   - name: inst_prof_name
@@ -50,6 +43,14 @@ resources:
     version:
       params:
         SEED: "initial_version"
+
+##---------------------------------------------------------------#
+##----------------------- AMI VPC Resources --------------------#
+##---------------------------------------------------------------#
+
+# AMI Infra state
+  - name: ami_infra_state
+    type: state
 
 # AMI State Resource Name
   - name: ami_state_res_name
@@ -81,13 +82,43 @@ resources:
       params:
         SEED: "initial_version"
 
-
-# AMI VPC Creation Config
+# AMI Base Config
   - name: ami_create_conf
     type: params
     version:
       params:
         BASE_EC2_AMI: "ami-841f46ff"
+
+##---------------------------------------------------------------#
+##----------------------- TEST VPC Resources --------------------#
+##---------------------------------------------------------------#
+# Test Infra state
+  - name: test_infra_state
+    type: state
+
+# Test State Resource Name
+  - name: test_state_res_name
+    type: params
+    version:
+      params:
+        AMI_STATE_RES_NAME: "test_infra_state"
+
+# Test VPC Creation Config
+  - name: test_vpc_conf
+    type: params
+    version:
+      params:
+        VPC_NAME: "test_vpc"
+        VPC_CIDR_BLOCK: "210.0.0.0/16"
+
+# Test VPC Creation Config
+  - name: test_vpc_subnet_conf
+    type: params
+    version:
+      params:
+        VPC_SUBNET_NAME: "test_vpc_subnet_pub"
+        VPC_SUBNET_CIDR_BLOCK: "210.0.0.0/24"
+
 
 
 ## Reference to ECS Test Cluster
