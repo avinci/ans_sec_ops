@@ -474,6 +474,7 @@ jobs:
       - IN: create_app_man
         switch: off
       - IN: test_env_ecs
+        switch: off
       - TASK: managed
 
 # RUN System Integration Testing
