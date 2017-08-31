@@ -177,21 +177,21 @@ resources:
 ##---------------------------------------------------------------#
 ##------------- Application Release Automation Resources --------#
 ##---------------------------------------------------------------#
-## REPO of SIT code
-#  - name: sit_repo
-#    type: gitRepo
-#    integration: "demo_gh"
-#    pointer:
-#      sourceName: "avinci/demoSIT"
-#      branch: master
-#
-## SIT env vars for BOX
-#  - name: sit_params
-#    type: params
-#    version:
-#      params:
-#        API_URL: "54.158.18.50:8080"
-#        API_TOKEN: "NA"
+# REPO of SIT code
+  - name: sit_repo
+    type: gitRepo
+    integration: "demo_gh"
+    pointer:
+      sourceName: "avinci/demoSIT"
+      branch: master
+
+# SIT env vars for BOX
+  - name: sit_params
+    type: params
+    version:
+      params:
+        API_URL: "54.158.18.50:8080"
+        API_TOKEN: "NA"
 #
 ## Seed version resource
 #  - name: seed_app_ver
