@@ -366,6 +366,8 @@ jobs:
       - IN: test_state_res_name
         switch: off
       - IN: prov_test_ecs
+        switch: off
+      - IN: prov_test_vpc_sg_group
       - IN: aws_creds
         switch: off
       - IN: ans_sec_ops
