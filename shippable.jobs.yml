@@ -348,8 +348,8 @@ jobs:
             export AWS_ACCESS_KEY_ID=$(shipctl get_integration_resource_field aws_creds aws_access_key_id)
             export AWS_SECRET_ACCESS_KEY=$(shipctl get_integration_resource_field aws_creds aws_secret_access_key)
             cd $(shipctl get_resource_state ans_sec_ops)
-            shipctl replace an_vpc_ecs_prov.yml
-            ansible-playbook -v an_vpc_ecs_prov.yml
+            shipctl replace an_ecs_prov.yml
+            ansible-playbook -v an_ecs_prov.yml
       - OUT: test_infra_state
       - OUT: test_env_ecs
 
