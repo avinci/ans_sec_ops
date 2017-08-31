@@ -472,6 +472,7 @@ jobs:
     type: deploy
     steps:
       - IN: create_app_man
+      - IN: prov_test_ec2
         switch: off
       - IN: test_env_ecs
         switch: off
