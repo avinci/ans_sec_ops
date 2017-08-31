@@ -475,8 +475,8 @@ jobs:
             pushd $(shipctl get_resource_meta test_infra_state)
             export VPC_SUBNET_ID=$(cat version.json | jq -r '.'version.propertyBag.VPC_SUBNET_ID)
             popd
-            shipctl replace an_test_deprov.yml
-            ansible-playbook -v an_test_deprov.yml
+            shipctl replace an_infra_deprov.yml
+            ansible-playbook -v an_infra_deprov.yml
       - OUT: test_infra_state
 
 # DEPROV TEST VPC with Ansible
@@ -713,7 +713,6 @@ jobs:
 #----------------------- CD to Production ----------------------#
 #---------------------------------------------------------------#
 
-
 # DEPLOY app to PROD
   - name: deploy_app_prod
     type: deploy
@@ -728,130 +727,67 @@ jobs:
 #        deployMethod: replace
 
 #---------------------------------------------------------------#
-#---------------------- DEPROVISION INFRA ----------------------#
+#----------------------- Deprov Prod Infra----------------------#
 #---------------------------------------------------------------#
 
-## DEPROVISION TEST VMs and ECS cluster
-#  - name: de_prov_ecs_test
-#    type: runSh
-#    steps:
-#      - IN: test_tf_state
-#      - IN: sit
-#        switch: off
-#      - IN: test_vpc_conf
-#        switch: off
-#      - IN: aws_creds
-#        switch: off
-#      - IN: auto_repo
-#        switch: off
-#      - IN: ami_sec_approved
-#        switch: off
-#      - TASK:
-#        - script: . /build/IN/auto_repo/gitRepo/awsTestECS/provTestInfra.sh destroy
-#      - OUT: test_tf_state
-#    on_success:
-#      - script: echo "SUCCESS"
-#    on_failure:
-#      - script: echo "FAILURE"
-#    always:
-#      - script: . /build/IN/auto_repo/gitRepo/archiveState.sh awsTestECS test_tf_state
+# DEPROV PROD Infra with Ansible
+  - name: deprov_test_infra
+    type: runSh
+    steps:
+      - IN: release_app
+        switch: off
+      - IN: aws_region
+      - IN: prod_state_res_name
+        switch: off
+      - IN: prod_infra_state
+      - IN: prod_ec2_conf
+        switch: off
+      - IN: prod_cluster_conf
+        switch: off
+      - IN: aws_creds
+        switch: off
+      - IN: ans_sec_ops
+        switch: off
+      - TASK:
+        - script: |
+            sudo pip install boto3
+            export AWS_ACCESS_KEY_ID=$(shipctl get_integration_resource_field aws_creds aws_access_key_id)
+            export AWS_SECRET_ACCESS_KEY=$(shipctl get_integration_resource_field aws_creds aws_secret_access_key)
+            cd $(shipctl get_resource_state ans_sec_ops)
+            pushd $(shipctl get_resource_meta prod_infra_state)
+            export VPC_SUBNET_ID=$(cat version.json | jq -r '.'version.propertyBag.VPC_SUBNET_ID)
+            popd
+            shipctl replace an_infra_deprov.yml
+            ansible-playbook -v an_infra_deprov.yml
+      - OUT: prod_infra_state
 
-## DEPROVISION PROD VMs and ECS cluster
-#  - name: de_prov_ecs_prod
-#    type: runSh
-#    steps:
-#      - IN: prov_ecs_prod
-#        switch: off
-#      - IN: prod_tf_state
-#      - IN: prod_vpc_conf
-#        switch: off
-#      - IN: aws_creds
-#        switch: off
-#      - IN: auto_repo
-#        switch: off
-#      - IN: ami_sec_approved
-#        switch: off
-#      - TASK:
-#        - script: . /build/IN/auto_repo/gitRepo/awsProdECS/provProdInfra.sh destroy
-#      - OUT: prod_tf_state
-#    on_success:
-#      - script: echo "SUCCESS"
-#    on_failure:
-#      - script: echo "FAILURE"
-#    always:
-#      - script: . /build/IN/auto_repo/gitRepo/archiveState.sh awsProdECS prod_tf_state
-
-## DEPROVISION NETWORK
-#  - name: de_prov_net
-#    type: runSh
-#    steps:
-#      - IN: setup_net
-#        switch: off
-#      - IN: net_tf_state
-#      - IN: net_conf
-#        switch: off
-#      - IN: aws_creds
-#        switch: off
-#      - IN: auto_repo
-#        switch: off
-#      - TASK:
-#        - script: . /build/IN/auto_repo/gitRepo/awsSetupIAM/provNetwork.sh destroy
-#      - OUT: net_tf_state
-#    on_success:
-#      - script: echo "SUCCESS"
-#    on_failure:
-#      - script: echo "FAILURE"
-#    always:
-#      - script: . /build/IN/auto_repo/gitRepo/archiveState.sh awsSetupIAM net_tf_state
-
-
-
-
-
-
-
-
-
-
-#---------------------------------------------------------------#
-#--------------------------- PROTOTYPE  ------------------------#
-#---------------------------------------------------------------#
-
-#########################  TESTING JOB #########################
-#  - name: test-job
-#    type: runSh
-#    steps:
-#      - IN: net_conf
-#      - IN: aws_creds
-#        switch: off
-#      - IN: auto_repo
-#        switch: off
-#      - TASK:
-#        - script: . IN/auto_repo/gitRepo/shipUtil.sh
-#        - script: . IN/auto_repo/gitRepo/test.sh
-#    on_success:
-#      - script: echo "SUCCESS"
-#    on_failure:
-#      - script: echo "FAILURE"
-#    always:
-#      - script: ls -al
-
-######################### NATIVE WAR CI/CD JOBS #########################
-## manifest that defines the Native WAR service definition
-#  - name: demo_war_manifest
-#    type: manifest
-#    steps:
-#      - IN: demo_war
-#      - IN: demo_war_params
-#
-## deploy job that deploys native war to cluster of VMs
-#  - name: demo_war_test_deploy
-#    type: deploy
-#    steps:
-#      - IN: demo_war_manifest
-#        force: true
-#      - IN: demo_war_test_cls
-#      - TASK:
-#        - script: sudo rm -rf /opt/tomcat/webapps/HelloWorld.war
-#        - script: sudo cp /tmp/shippable/demo_war_manifest/demo_war/HelloWorld.war /opt/tomcat/webapps/HelloWorld.war
-#
+# DEPROV POD VPC with Ansible
+  - name: deprov_prod_vpc
+    type: runSh
+    steps:
+      - IN: deprov_prod_infra
+      - IN: aws_region
+      - IN: prod_state_res_name
+        switch: off
+      - IN: prod_infra_state
+      - IN: prod_vpc_subnet_conf
+        switch: off
+      - IN: prod_vpc_conf
+        switch: off
+      - IN: aws_creds
+        switch: off
+      - IN: ans_sec_ops
+        switch: off
+      - TASK:
+        - script: |
+            export AWS_ACCESS_KEY_ID=$(shipctl get_integration_resource_field aws_creds aws_access_key_id)
+            export AWS_SECRET_ACCESS_KEY=$(shipctl get_integration_resource_field aws_creds aws_secret_access_key)
+            cd $(shipctl get_resource_state ans_sec_ops)
+            pushd $(shipctl get_resource_meta prod_infra_state)
+            export VPC_ID=$(cat version.json | jq -r '.'version.propertyBag.VPC_ID)
+            export VPC_SUBNET_ID=$(cat version.json | jq -r '.'version.propertyBag.VPC_SUBNET_ID)
+            export VPC_IGW_ID=$(cat version.json | jq -r '.'version.propertyBag.VPC_IGW_ID)
+            popd
+            shipctl replace an_vpc_deprov.yml
+            ansible-playbook -v an_vpc_deprov.yml
+      - OUT: prod_infra_state
